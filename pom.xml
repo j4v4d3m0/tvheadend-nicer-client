@@ -17,7 +17,19 @@
 		<java.version>1.${java.version.release}</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
-
+	<pluginRepositories>
+		<pluginRepository>
+			<id>jsweet-plugins-release</id>
+			<name>plugins-release</name>
+			<url>http://repository.jsweet.org/artifactory/plugins-release-local</url>
+		</pluginRepository>
+		<pluginRepository>
+			<snapshots />
+			<id>jsweet-plugins-snapshots</id>
+			<name>plugins-snapshot</name>
+			<url>http://repository.jsweet.org/artifactory/plugins-snapshot-local</url>
+		</pluginRepository>
+	</pluginRepositories>
 	<repositories>
 		<repository>
 			<id>jsweet-central</id>
@@ -31,31 +43,85 @@
 			<url>http://repository.jsweet.org/artifactory/libs-snapshot-local</url>
 		</repository>
 	</repositories>
-
 	<build>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.1</version>
+				<version>3.8.1</version>
 				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
+					<release>${java.version.release}</release>
+					<compilerVersion>${java.version}</compilerVersion>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+					<encoding>${project.build.sourceEncoding}</encoding>
 				</configuration>
 			</plugin>
 			<plugin>
-				<groupId>org.jsweet.v3</groupId>
+				<groupId>org.jsweet</groupId>
 				<artifactId>jsweet-maven-plugin</artifactId>
-				<version>3.0.0</version>
+				<version>${jsweet.transpiler.version}</version>
 				<configuration>
+					<verbose>true</verbose>
 					<sourceMap>true</sourceMap>
 					<outDir>target/js</outDir>
-					<targetVersion>ES3</targetVersion>
-					<!-- bundle your JS automatically -->
-					<bundle>true</bundle>
-					<!-- end of bundle configuration -->
+					<tsserver>true</tsserver>
+					<targetVersion>ES6</targetVersion>
+					<candiesJsOut>target/candies</candiesJsOut>
 				</configuration>
+				<executions>
+					<execution>
+						<id>generate-js</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>jsweet</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>clean</id>
+						<phase>clean</phase>
+						<goals>
+							<goal>clean</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
+		<pluginManagement>
+			<plugins>
+				<!--This plugin's configuration is used to store Eclipse m2e settings 
+					only. It has no influence on the Maven build itself. -->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.jsweet
+										</groupId>
+										<artifactId>
+											jsweet-maven-plugin
+										</artifactId>
+										<versionRange>
+											[1.1.0-SNAPSHOT,)
+										</versionRange>
+										<goals>
+											<goal>jsweet</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
 	<dependencies>
 		<dependency>
@@ -69,10 +135,7 @@
 			<artifactId>jsweet-core</artifactId>
 			<version>${jsweet.core.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.jsweet.candies</groupId>
-			<artifactId>angular</artifactId>
-			<version>1.4.0-20201211</version>
-		</dependency>
+
+
 	</dependencies>
 </project>
