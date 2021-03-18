@@ -1,0 +1,78 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.github.tvheadend_nicer_client</groupId>
+	<artifactId>tvheadend_nicer_client</artifactId>
+	<packaging>jar</packaging>
+	<version>1.0.0</version>
+
+	<properties>
+		<jsweet.transpiler.version>3.1.0-SNAPSHOT</jsweet.transpiler.version>
+		<jsweet.core.version>6.3.0</jsweet.core.version>
+
+		<java.version.release>11</java.version.release>
+		<java.version>1.${java.version.release}</java.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<repositories>
+		<repository>
+			<id>jsweet-central</id>
+			<name>libs-release</name>
+			<url>http://repository.jsweet.org/artifactory/libs-release-local</url>
+		</repository>
+		<repository>
+			<snapshots />
+			<id>jsweet-snapshots</id>
+			<name>libs-snapshot</name>
+			<url>http://repository.jsweet.org/artifactory/libs-snapshot-local</url>
+		</repository>
+	</repositories>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.jsweet.v3</groupId>
+				<artifactId>jsweet-maven-plugin</artifactId>
+				<version>3.0.0</version>
+				<configuration>
+					<sourceMap>true</sourceMap>
+					<outDir>target/js</outDir>
+					<targetVersion>ES3</targetVersion>
+					<!-- bundle your JS automatically -->
+					<bundle>true</bundle>
+					<!-- end of bundle configuration -->
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<dependencies>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.7</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jsweet</groupId>
+			<artifactId>jsweet-core</artifactId>
+			<version>${jsweet.core.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jsweet.candies</groupId>
+			<artifactId>angular</artifactId>
+			<version>1.4.0-20201211</version>
+		</dependency>
+	</dependencies>
+</project>
