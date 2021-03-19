@@ -63,10 +63,10 @@
 				<configuration>
 					<verbose>true</verbose>
 					<sourceMap>true</sourceMap>
-					<outDir>target/js</outDir>
+					<outDir>target/classes/web/js</outDir>
 					<tsserver>true</tsserver>
 					<targetVersion>ES6</targetVersion>
-					<candiesJsOut>target/candies</candiesJsOut>
+					<candiesJsOut>target/classes/web/candies</candiesJsOut>
 				</configuration>
 				<executions>
 					<execution>
@@ -136,6 +136,10 @@
 			<version>${jsweet.core.version}</version>
 		</dependency>
 
-
+		<dependency>
+			<groupId>org.jsweet.candies</groupId>
+			<artifactId>jquery</artifactId>
+			<version>1.10.0-20170726</version>
+		</dependency>
 	</dependencies>
 </project>

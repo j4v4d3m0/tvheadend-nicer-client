@@ -1,0 +1,53 @@
+<html>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$( document ).ready(function() {
+	$.ajax({
+		  url: "http://tv.pgy.no-ip.hu/playlist",
+		  cache: false,
+          async: true,
+
+		  method: "GET",
+
+		  success: function( result, r ) {
+			  var html = "";
+			  result = result.split('\n');
+			  var name;
+			  for(k in result) {
+			  	var line = result[k];
+			  	if (line.startsWith("#EXTINF")) {
+			  		name = line.split(",")[1];
+			  	} else {
+			  		if (name != null && name != "{name-not-set}") {
+						html += "<a onclick=\"play('" + line + "')\">" + name + "</a><br>";
+					}
+				}
+			  }
+			  
+		    $( "#playlist" ).html( html );
+		  },
+		  error: function( result, r ) {
+			  alert("error: " + result);
+
+		  },
+		  beforeSend: function (xhr) {
+		  	xhr.setRequestHeader ("Authorization", "Basic " + btoa("test:test"));
+		  }
+		});
+});
+
+function play(url) {
+	var $video = $('#player'),
+	videoSrc = $('source', $video).attr('src', url);
+	$video[0].load();
+	$video[0].play();
+}
+
+</script>
+<body>
+  <video id="player">
+    <source />
+  </video>
+  <div id="playlist"></div>
+</body>
+</html>
